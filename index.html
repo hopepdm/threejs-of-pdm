@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>菜鸟教程(runoob.com)</title>
+</head>
+<body style="margin:0px;">
+
+<canvas id="myCanvas" width="200" height="200" style="position:fixed;left:10px;top:100px;border:1px solid #d3d3d3;" onmousemove="paint(event)">
+    您的浏览器不支持 HTML5 canvas 标签。</canvas>
+<div id="xycoordinates" style="position:absolute;top:450px;left:300px"></div>
+<div id="xycoordina" style="position:absolute;top:300px;left:30px">hai</div>
+<script>
+    var c=document.getElementById("myCanvas");
+    var ctx=c.getContext("2d");
+    function paint(e){
+        ctx.clearRect(0,0,200,500);
+        x=e.clientX-c.getBoundingClientRect().left+c.scrollLeft;
+        y=e.clientY-c.getBoundingClientRect().top+c.scrollTop;
+        ctx.beginPath();
+        ctx.arc(x,y,4,0,2*Math.PI);
+        ctx.stroke();
+        document.getElementById("xycoordinates").innerHTML="Coordinates: (" + e.clientX + "," + e.clientY + ")";
+
+    }
+</script>
+</body>
+</html>
