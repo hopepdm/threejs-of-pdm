@@ -4,36 +4,37 @@
 
 2017-10-16
 Hopepdm完善，略作修改
-本demo可以知识点，ajax请求，自动刷新，正则匹配
+本demo可以学习的知识点有，ajax请求，自动刷新，正则匹配，字符串转变量，html插入
 本demo在本地服务器下即可运行
 -->
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
-<meta charset="utf-8" />
+<html>
+<meta charset="utf-8"/>
 <head>
 <script type="text/javascript" src="https://code.jquery.com/jquery-1.4.1.min.js"></script>
 <script type="text/javascript">
 
-var stockCode="002370";
+var stockCode = "002370";
 
-$(document).ready(function(){
+$(document).ready(function () {
     getNewData();
-     var tg=self.setInterval("getNewData()",500);//N毫秒刷新一次，1000毫秒＝1秒
+     var tg = self.setInterval("getNewData()",500);//N毫秒刷新一次，1000毫秒＝1秒
 });
 //获取新数据
 function getNewData()
 {
-    if(getQueryString('c')!=undefined)
+    if(getQueryString('c') != undefined)
     {
-        stockCode=getQueryString('c');
+        stockCode = getQueryString('c');
     }
-    var type=stockCode[0]==6?'sh':'sz';
-    var durl="https://hq.sinajs.cn/list="+type+stockCode;
-    $.getScript(durl,function(data){
+    var type=stockCode[0] == 6?'sh':'sz';
+    var durl = "https://hq.sinajs.cn/list="+type+stockCode;
+    $.getScript(durl, function (data) {
         //加载脚本并执行
-		var dataType='var hq = hq_str_'+type+stockCode;
+		//字符串转变量   split字符串拆成数组
+		var dataType = 'var hq = hq_str_'+type+stockCode;
 		eval(dataType)
-		var elements=hq.split(",");
+		var elements = hq.split(",");
 		refreshData(elements);
     });
 }
@@ -41,20 +42,29 @@ function getNewData()
 //刷新显示
 function refreshData(data)
 { 	 
-	var result="";	
-	result+="<br/>";
-	result+= data[0].split('')[0]+data[0].split('')[1]+'\t'+'\t'+data[3]+'\t'+'\t' + 'min:' + data[5]+'\t'+"**" + parseInt(Math.random()*10) +'%';
+	var result = "";	
+	result += "<br/>";
+	result += data[0].split('')[0] + data[0].split('')[1] + '\t' + '\t' + data[3] + '\t' + '\t' + 'min:' + data[5] + '\t' + "**" + parseInt(Math.random() * 10) + '%';
 	
-	result+='<div style="height:10px;width:100px;background-color:red;"></div>'   	 
+	result += '<div style="height:10px;width:100px;background-color:red;"></div>'   	 
 	
-	result+='<br/>'+data[10]+'\t\t'+data[11];
+	result += '<br/>' + data[10] + '\t\t' + data[11];
           
-	result+='<div style="height:10px;width:100px; border:dashed 1px #aaaaaa"></div>'             
-	result+=''+data[20] +'\t\t'+data[21];
- 
+	result += '<div style="height:10px;width:100px; border:dashed 1px #aaaaaa"></div>'             
+	result += '' + data[20] + '\t\t' + data[21];
+	
+	//jq直接插入html
 	$("#result").html(result);
 }
+
 //getQueryString获取url参数
+// 1、reg是一个正则表达式子，是你获得的参数
+// 2. window.location.search.match()
+
+//     1、location是包含了相关的url的信息，它是windown的一部分。
+//     2、search是一个可以查询的属性，可以查询？之后的部分。
+//     3、match()是你要匹配的部分 后面可以是正则表达式.
+//     4、return unescpe（r[2]） 返回的值 一个数组，unescape方法是解码的
 function getQueryString(name) {
     var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
     var r = window.location.search.substr(1).match(reg);
