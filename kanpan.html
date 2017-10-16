@@ -26,10 +26,10 @@ function getNewData()
         stockCode=getQueryString('c');
     }
     var type=stockCode[0]==6?1:2;
-    var durl="https://hq.sinajs.cn/list=sh601088";
+    var durl="https://hq.sinajs.cn/list=sz002370";
     $.getScript(durl,function(data){
         //加载脚本并执行
-		var elements=hq_str_sh601088.split(",");
+		var elements=hq_str_sz002370.split(",");
 		$('#result').text('');
         $('#result').append("current:"+elements[3] +"-" +Math.random());
     });
