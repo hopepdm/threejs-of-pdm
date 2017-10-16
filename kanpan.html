@@ -11,7 +11,7 @@ Hopepdm完善，略作修改
 <html xmlns="http://www.w3.org/1999/xhtml">
 <meta charset="utf-8" />
 <head>
-<script type="text/javascript" src="http://code.jquery.com/jquery-1.4.1.min.js"></script>
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.4.1.min.js"></script>
 <script type="text/javascript">
 var stockCode="600804";
 $(document).ready(function(){
@@ -26,7 +26,7 @@ function getNewData()
         stockCode=getQueryString('c');
     }
     var type=stockCode[0]==6?1:2;
-    var durl="http://hq.sinajs.cn/list=sh601088";
+    var durl="https://hq.sinajs.cn/list=sh601088";
     $.getScript(durl,function(data){
         //加载脚本并执行
 		var elements=hq_str_sh601088.split(",");
