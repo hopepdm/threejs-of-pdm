@@ -1,0 +1,49 @@
+<!--
+说明：实时更新股票数据
+原作者：黑桃A
+
+2017-10-16
+Hopepdm完善，略作修改
+本demo可以知识点，ajax请求，自动刷新，正则匹配
+本demo在本地服务器下即可运行
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<meta charset="utf-8" />
+<head>
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.4.1.min.js"></script>
+<script type="text/javascript">
+var stockCode="600804";
+$(document).ready(function(){
+    getNewData();
+     var tg=self.setInterval("getNewData()",2000);//N毫秒刷新一次，1000毫秒＝1秒
+});
+//获取新数据
+function getNewData()
+{
+    if(getQueryString('c')!=undefined)
+    {
+        stockCode=getQueryString('c');
+    }
+    var type=stockCode[0]==6?1:2;
+    var durl="http://hq.sinajs.cn/list=sh601088";
+    $.getScript(durl,function(data){
+        //加载脚本并执行
+		var elements=hq_str_sh601088.split(",");
+		$('#result').text('');
+        $('#result').append("current:"+elements[3] +"-" +Math.random());
+    });
+}
+
+//getQueryString获取url参数
+function getQueryString(name) {
+    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+    var r = window.location.search.substr(1).match(reg);
+    if (r != null) return unescape(r[2]); return null;
+}
+</script>
+</head>
+<body>
+    <div id="result" style="color:#000000;"></div>
+</body>
+</html>
