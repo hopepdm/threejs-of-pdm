@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+
+<!-- vue.js小demo -->
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title></title>
+    </head>
+    <body>
+
+        <div id="container">我的声明周期，大家看吧！{{test}}</div>
+        
+    </body>
+    <script type="text/javascript" src="http://cdn.static.runoob.com/libs/jquery/1.10.2/jquery.min.js" ></script>
+    <script type="text/javascript" src="https://cdn.bootcss.com/vue/2.4.2/vue.min.js" ></script>
+    <script type="text/javascript">
+
+        //以下代码时显示vm整个生命周期的流程
+        var vm = new Vue({
+            el: "#container",
+            data: {
+                test : 'hello world'
+            },
+            beforeCreate: function(){
+                console.log(this);
+                showData('创建vue实例前',this);
+            },
+            created: function(){
+                showData('创建vue实例后',this);
+            },
+            beforeMount:function(){
+                showData('挂载到dom前',this);
+            },
+            mounted: function(){
+                showData('挂载到dom后',this);
+            },
+            beforeUpdate:function(){
+                showData('数据变化更新前',this);
+            },
+            updated:function(){
+                showData('数据变化更新后',this);
+            },
+            beforeDestroy:function(){
+                vm.test ="3333";
+                showData('vue实例销毁前',this);
+            },
+            destroyed:function(){
+                showData('vue实例销毁后',this);
+            }
+        
+        });
+        function realDom(){
+            console.log('真实dom结构：' + document.getElementById('container').innerHTML);
+        }
+        function showData(process,obj){
+            console.log(process);
+            console.log('data 数据：' + obj.test)
+            console.log('挂载的对象：')
+            console.log(obj.$el)
+            realDom();
+            console.log('------------------')
+            console.log('------------------')
+        }
+        
+    </script>
+</html>
