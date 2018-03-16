@@ -1,29 +1,284 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-    <meta charset="utf-8">
-    <title>demo</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="./bootstrap.min.css">
+    <script src="./jquery.min.js"></script>
+    <script src="./bootstrap.min.js"></script>
+    <style>
+        .canvas {
+            position: fixed;
+            z-index: -100;
+            width: 100%;
+            height: 100%;
+            background-color: #98a0cc;
+        }
+
+        h1, h2, small, p {
+            color: white;
+        }
+    </style>
 </head>
-<body style="margin:0px;">
 
-<canvas id="myCanvas" width="200" height="200" style="position:fixed;left:10px;top:100px;border:1px solid #d3d3d3;" onmousemove="paint(event)">
-    您的浏览器不支持 HTML5 canvas 标签。</canvas>
-<div id="xycoordinates" style="position:absolute;top:450px;left:300px"></div>
-<div id="xycoordina" style="position:absolute;top:300px;left:30px">hai</div>
-<div id="home" style="position: absolute; top: 100px; right: 300px; width:40px; height: 20px;"><a href="/blog">Home</a></div>
-<script>
-    var c=document.getElementById("myCanvas");
-    var ctx=c.getContext("2d");
-    function paint(e){
-        ctx.clearRect(0,0,200,500);
-        x=e.clientX-c.getBoundingClientRect().left+c.scrollLeft;
-        y=e.clientY-c.getBoundingClientRect().top+c.scrollTop;
-        ctx.beginPath();
-        ctx.arc(x,y,4,0,2*Math.PI);
-        ctx.stroke();
-        document.getElementById("xycoordinates").innerHTML="Coordinates: (" + e.clientX + "," + e.clientY + ")";
+<body>
+    <div class="canvas">
+        
+    </div>
+    <div class="container">
+        <div class="row clearfix">
+            <div class="col-md-12 column">
+                <div class="page-header">
+                    <h1>
+                        My collect
+                        <small>wish you like</small>
+                    </h1>
+                </div>
+                <div class="row clearfix">
+                    <div class="col-md-12 column">
+                        <h2>
+                            My blog
+                        </h2>
+                        <p>
+                            这是我的个人博客首页
+                        </p>
+                        <p>
+                            <a class="btn" href="https://hopepdm.github.io/blog">goooooo To »</a>
+                        </p>
+                        <h2>
+                            Webgl learning
+                        </h2>
+                        <p>
+                            整理自网上的webgl资料
+                        </p>
+                        <p>
+                            <a class="btn" href="https://hopepdm.github.io/webgl">goooooo To »</a>
+                        </p>
+                        <h2>
+                            跳动的手掌
+                        </h2>
+                        <p>
+                            基于three.js的模型动画
+                        </p>
+                        <p>
+                            <a class="btn" href="https://hopepdm.github.io/modelview/hand.html">goooooo To »</a>
+                        </p>
+                        <h2>
+                            Obj模型在线查看
+                        </h2>
+                        <p>
+                            基于three.js的模型查看平台
+                        </p>
+                        <p>
+                            <a class="btn" href="https://hopepdm.cn/modelexam/index.html">goooooo To »</a>
+                        </p>
+                        <h2>
+                            简易gulp配置
+                        </h2>
+                        <p>
+                            gulp预配置
+                        </p>
+                        <p>
+                            <a class="btn" href="https://github.com/hopepdm/gulppro">goooooo To »</a>
+                        </p>
+                        <h2>
+                            定位
+                        </h2>
+                        <p>
+                            简单的定位mouse例子
+                        </p>
+                        <p>
+                            <a class="btn" href="https://hopepdm.github.io">goooooo To »</a>
+                        </p>
+                        <h2>
+                            shader粒子库
+                        </h2>
+                        <p>
+                            cool
+                        </p>
+                        <p>
+                            <a class="btn" href="http://squarefeet.github.io/ShaderParticleEngine/">goooooo To »</a>
+                        </p>
+                        http://hopepdm.cn/canvaspic/
+                        <h2>
+                            好玩的三维展厅
+                        </h2>
+                        <p>
+                            基于canvas的轻量展厅系统
+                        </p>
+                        <p>
+                            <a class="btn" href="http://hopepdm.github.io/canvaspic/">goooooo To »</a>
+                        </p>
+                        <h2>
+                            简单的轮播
+                        </h2>
+                        <p>
+                            轮播
+                        </p>
+                        <p>
+                            <a class="btn" href="http://hopepdm.github.io/curousel/">goooooo To »</a>
+                        </p>
 
-    }
-</script>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="./three.min.js"></script>
+    <script id="vertexShader" type="x-shader/x-vertex">
+        void main() {
+            gl_Position = vec4( position, 1.0 );
+        }
+    </script>
+    <script id="fragmentShader" type="x-shader/x-fragment">
+        // Author @patriciogv - 2015
+        // http://patriciogonzalezvivo.com
+        
+        #ifdef GL_ES
+        precision mediump float;
+        #endif
+        
+        uniform vec2 u_resolution;
+        uniform vec2 u_mouse;
+        uniform float u_time;
+        
+        float random (in vec2 _st) {
+            return fract(sin(dot(_st.xy,
+                                 vec2(12.9898,78.233)))*
+                43758.5453123);
+        }
+        
+        // Based on Morgan McGuire @morgan3d
+        // https://www.shadertoy.com/view/4dS3Wd
+        float noise (in vec2 _st) {
+            vec2 i = floor(_st);
+            vec2 f = fract(_st);
+        
+            // Four corners in 2D of a tile
+            float a = random(i);
+            float b = random(i + vec2(1.0, 0.0));
+            float c = random(i + vec2(0.0, 1.0));
+            float d = random(i + vec2(1.0, 1.0));
+        
+            vec2 u = f * f * (3.0 - 2.0 * f);
+        
+            return mix(a, b, u.x) +
+                    (c - a)* u.y * (1.0 - u.x) +
+                    (d - b) * u.x * u.y;
+        }
+        
+        #define NUM_OCTAVES 5
+        
+        float fbm ( in vec2 _st) {
+            float v = 0.0;
+            float a = 0.5;
+            vec2 shift = vec2(100.0);
+            // Rotate to reduce axial bias
+            mat2 rot = mat2(cos(0.5), sin(0.5),
+                            -sin(0.5), cos(0.50));
+            for (int i = 0; i < NUM_OCTAVES; ++i) {
+                v += a * noise(_st);
+                _st = rot * _st * 2.0 + shift;
+                a *= 0.5;
+            }
+            return v;
+        }
+        
+        void main() {
+            vec2 st = gl_FragCoord.xy/u_resolution.xy*3.;
+            // st += st * abs(sin(u_time*0.1)*3.0);
+            vec3 color = vec3(0.0);
+        
+            vec2 q = vec2(0.);
+            q.x = fbm( st + 0.00*u_time);
+            q.y = fbm( st + vec2(1.0));
+        
+            vec2 r = vec2(0.);
+            r.x = fbm( st + 1.0*q + vec2(1.7,9.2)+ 0.15*u_time );
+            r.y = fbm( st + 1.0*q + vec2(8.3,2.8)+ 0.126*u_time);
+        
+            float f = fbm(st+r);
+        
+            color = mix(vec3(-0.984*sin(u_time),0.098,0.667),
+            vec3(0.667*sin(u_time),0.653*cos(0.5*u_time),0.519),
+            clamp((f*f)*3.088,-0.688,1.0));
+        
+            color = mix(color,
+                        vec3(0,0,0.164706),
+                        clamp(length(q),0.0,1.0));
+        
+            color = mix(color,
+                        vec3(0.666667,1,1),
+                        clamp(length(r.x),0.0,1.0));
+        
+            gl_FragColor = vec4((f*f*f+.6*f*f+.5*f)*color,1.);
+        }
+    </script>
+    <script>
+        var container;
+        var camera, scene, renderer;
+        var uniforms;
+
+        init();
+        animate();
+
+        function init() {
+            container = document.querySelector( '.canvas' );
+
+            camera = new THREE.Camera();
+            camera.position.z = 1;
+
+            scene = new THREE.Scene();
+
+            var geometry = new THREE.PlaneBufferGeometry( 2, 2 );
+
+            uniforms = {
+                u_time: { type: "f", value: 1.0 },
+                u_resolution: { type: "v2", value: new THREE.Vector2() }
+            };
+
+            var material = new THREE.ShaderMaterial( {
+                uniforms: uniforms,
+                vertexShader: document.getElementById( 'vertexShader' ).textContent,
+                fragmentShader: document.getElementById( 'fragmentShader' ).textContent
+            } );
+
+            var mesh = new THREE.Mesh( geometry, material );
+            scene.add( mesh );
+
+            renderer = new THREE.WebGLRenderer();
+            renderer.setPixelRatio( window.devicePixelRatio );
+
+            container.appendChild( renderer.domElement );
+
+            onWindowResize();
+            window.addEventListener( 'resize', onWindowResize, false );
+        }
+
+        function onWindowResize( event ) {
+            renderer.setSize( window.innerWidth, window.innerHeight );
+            uniforms.u_resolution.value.x = renderer.domElement.width;
+            uniforms.u_resolution.value.y = renderer.domElement.height;
+        }
+
+        function animate() {
+            requestAnimationFrame( animate );
+            render();
+        }
+
+        function render() {
+            uniforms.u_time.value += 0.05;
+            renderer.render( scene, camera );
+        }
+    </script>
 </body>
+
+</body>
+
 </html>
