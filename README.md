@@ -5,7 +5,7 @@
 
 域：https://hopepdm.github.io/threejs-of-pdm/
 
-访问地址：https://hopepdm.github.io/threejs-of-pdm//kanpan.html
+访问地址：https://hopepdm.github.io/threejs-of-pdm/kanpan.html
 
 更新此demo是为了学习ajax请求，实时更新，正则匹配，后台接口。
 
@@ -73,6 +73,6 @@ var hq_str_sh601006="大秦铁路, 27.55, 27.25, 26.91, 27.55, 26.20, 26.91, 26.
 2017/10/19补充 xiaofeiji.html
 ---
 
-访问地址：https://hopepdm.github.io/xiaofeiji.html
+访问地址：https://hopepdm.github.io/threejs-of-pdm/xiaofeiji.html
 
 three.js小项目，对3d场景的创建有一定参考性，代码中注释清楚，不赘言了。
